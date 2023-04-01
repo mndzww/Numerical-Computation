@@ -1,0 +1,61 @@
+print("Spring problem with Gauss-Seidel method")
+import numpy as np
+a = np.array([[10,0,0,0,0],[-10,10,0,0,0],[0,-10,10,0,0],[0,0,-5,5,0],[0,0,0,-5,5]]) #didapat dari hasil pengerjaan secara analitikal
+b = np.array([[100],[50],[100],[50],[100]])
+x = [0, 0, 0, 0, 0]
+iterasi = 0
+E = 1
+xb = []
+n = len(x)
+
+e = float(input("masukkan nilai toleransi: "))
+#print("nilai toleransi: {}".format(e))
+
+while E > e:
+    for i in range (0, n):
+        sigma = 0
+        for j in range (0, i):
+            sigma += a[i, j]*xb[j]
+        for j in range (i + 1, n):
+            sigma += a[i, j]*x[j]
+        xn = (1/a[i, i])*(b[i] - sigma)
+        xb.append(xn)
+    E = abs(max(x) - max(xb)) 
+    x = xb
+    #print(xb)
+    xb = []
+    iterasi += 1
+
+print(x)
+print("telah mencapai konvergen pada iterasi ke-{}".format(iterasi))
+
+print("Kirchoof Voltage laws problem with Jacoby Methods")
+import numpy as np
+a = np.array([[80,-50,-30,0],[-50,100,-10,-25],[0,-25,-20,0],[-30,-10,65,-2]]) #didapat dari hasil pengerjaan secara analitikal
+b = np.array([[-120], [0],[0],[0]])
+x = [0, 0, 0, 0]
+iterasi = 0
+E = 1
+xb = []
+n = len(x)
+
+e = float(input("masukkan nilai toleransi: "))
+#print("nilai toleransi: {}".format(e))
+
+while E > e:
+    for i in range (0, n):
+        sigma = 0
+        for j in range (0, i):
+            sigma += a[i, j]*x[j]
+        for j in range (i + 1, n):
+            sigma += a[i, j]*x[j]
+        xn = (1/a[i, i])*(b[i] - sigma)
+        xb.append(xn)
+    E = abs(max(x) - max(xb)) 
+    x = xb
+    #print(xb)
+    xb = []
+    iterasi += 1
+
+print(x)
+print("telah mencapai konvergen pada iterasi ke-{}".format(iterasi))
