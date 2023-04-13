@@ -27,4 +27,4 @@ for i in range(n):
     plt.ylim(0,10)
     plt.plot(x,y)
     plt.show()
-print('Nilai interpolaso at %.3f is %.3f.' % (xp, yp))
+print('Nilai interpolasi pada %.3f is %.3f.' % (xp, yp))
