@@ -1,0 +1,30 @@
+# Lagrange Interpolation
+import numpy as np
+import matplotlib.pyplot as plt
+
+n = int(input('Masukkan banyaknya data: '))
+x = np.zeros((n))
+y = np.zeros((n))
+
+print('Perolehan data x dan y: ')
+for i in range(n):
+    x[i] = float(input( 'x['+str(i)+']='))
+    y[i] = float(input( 'y['+str(i)+']='))
+    print(x)
+    print(y)
+
+xp = float(input('masukkan interpolasi point-x: '))
+yp = 0
+
+for i in range(n):
+    p = 1
+    for j in range(n):
+        if i != j:
+            p = p * (xp - x[j])/(x[i] - x[j])
+    yp = yp + p * y[i]    
+
+    plt.xlim(0,10)
+    plt.ylim(0,10)
+    plt.plot(x,y)
+    plt.show()
+print('Nilai interpolaso at %.3f is %.3f.' % (xp, yp))
