@@ -1,0 +1,111 @@
+#Polinomial Interpolation
+#Cara Polinomial - pertama
+
+import math as mt
+# Kumpulan data
+x = [0.00001, 0.6, 0.9]
+y = [mt.sin(0), mt.sin(0.6), mt.sin(0.9)]
+
+# Interpolasi polinomial derajat 1
+a0 = y[0]
+a1 = (y[1] - y[0]) / (x[1] - x[0])
+f1 = a0 + a1*(0.45-x[0])
+print("Hasil interpolasi polinomial derajat 1:", f1)
+
+# Interpolasi polinomial derajat 2
+a0 = y[0]
+a1 = (y[1] - y[0]) / (x[1] - x[0])
+a2 = (((y[2] - y[1]) / (x[2] - x[1])) - ((y[1] - y[0]) / (x[1] - x[0]))) / (x[2] - x[0])
+f2 = a0 + a1*(0.45-x[0]) + a2*(0.45-x[0])*(0.45-x[1])
+print("Hasil interpolasi polinomial derajat 2:", f2)
+
+#Cara Polinomial - kedua
+import math as mt
+x = [0,0.6,0.9]
+y = [mt.sin(0),mt.sin(0.6),mt.sin(0.9)]
+n = 3
+xp = float(input("Masukkan interpolasi -x: "))
+e = 0
+h = 0 
+
+bo = y[0]
+b1 = (y[2]-y[1])/(x[2]-x[1])
+b2 = (((y[2]-y[1])/(x[2]-x[1]))-b1)/x[2]-x[0]
+for i in range (n):
+    if n == 1:
+        h = bo+b1(xp-x[0])
+    if n == 2:
+        h = bo+(b1*(xp-x[0]))+(b2*(xp-x[0])*(xp-x[1]))
+
+    e = abs(mt.sin(0.45)-h)
+print(e)
+print(h)
+
+#Lagrange Interpolation
+import numpy as np
+
+n = int(input('Masukkan banyaknya data: '))
+x = np.zeros((n))
+y = np.zeros((n))
+
+print('Perolehan data x dan y: ')
+for i in range(n):
+    x[i] = float(input( 'x['+str(i)+']='))
+    y[i] = float(input( 'y['+str(i)+']='))
+    print(x)
+    print(y)
+
+xp = float(input('masukkan interpolasi point-x: '))
+yp = 0
+
+for i in range(n):
+    p = 1
+    for j in range(n):
+        if i != j:
+            p = p * (xp - x[j])/(x[i] - x[j])
+    yp = yp + p * y[i]    
+print('Nilai interpolasi at %.3f is %.3f.' % (xp, yp))
+
+#Newton Forward Difference Interpolation
+import math as mt
+
+# rumus umum newton forward : f(a+hu) = f(a) + uΔf(a) + (u(u-1) / 2!) Δ^2 f(a) + ... + (u(u-1)(u-2)...(u-n+1)/n!) Δ^n f(a)
+# rumus yang akan dipakai   : (u(u-1)(u-2)...(u-n+1)/n!) Δ^n f(a)
+# perhitungan nilai u => u(1) = u(u-1) ; u(2) = u(u-2) ; 
+def nilai_u(u, n):
+    temp = u
+    for i in range(1, n):
+        temp = temp * (u - i)
+    return temp
+
+#Memasukkan data semisal nilai sin dari x-array dibawah ini (1,2,3,4)
+n = 4
+x = [ 45, 50, 55, 60 ]
+y = [[0 for i in range(n)] for j in range(n)]
+y[0][0] = 0.7071 #(1)
+y[1][0] = 0.7660 #(2)
+y[2][0] = 0.8192 #(3)
+y[3][0] = 0.8660 #(4)
+ 
+# pengkalkulasian rumus newton
+for i in range(1, n):
+    for j in range(n - i):
+        y[j][i] = y[j + 1][i - 1] - y[j][i - 1]
+ 
+# menampilkan tabel newton forward difference (functional)
+for i in range(n):
+    print(x[i], end = "\t")
+    for j in range(n - i):
+        print(y[i][j], end = "\t")
+    print("")
+ 
+# Masukkan nilai yang akan di interpolasikan
+value = 52 
+ 
+# pengkalkulasian rumus newton
+sum = y[0][0]
+u = (value - x[0]) / (x[1] - x[0])
+for i in range(1,n):
+    sum = sum + (nilai_u(u, i) * y[0][i]) / mt.factorial(i)
+ 
+print("Nilai sinus pada {} ialah {}".format(value,sum))
