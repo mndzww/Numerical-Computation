@@ -41,7 +41,10 @@ for i in range (n):
 print(e)
 print(h)
 
-#Lagrange Interpolation
+
+
+
+# Lagrange Interpolation
 import numpy as np
 
 n = int(input('Masukkan banyaknya data: '))
@@ -64,7 +67,10 @@ for i in range(n):
         if i != j:
             p = p * (xp - x[j])/(x[i] - x[j])
     yp = yp + p * y[i]    
-print('Nilai interpolasi at %.3f is %.3f.' % (xp, yp))
+print(f'Nilai interpolasi at {xp:.3f} is {yp:.3f}')
+
+
+
 
 #Newton Forward Difference Interpolation
 import math as mt
