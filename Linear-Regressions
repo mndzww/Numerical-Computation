@@ -1,0 +1,63 @@
+import numpy as np
+import matplotlib.pyplot as plt
+x=[1,2,3,4,5,6,7,8,9,10]
+y=[1.8 ,3.5 ,4.2 ,4.9 ,5.3 ,6 ,6.8 ,6.5 ,6.4 ,6.9 ]
+vander=[]
+n = int(input("Masukkan jumlah orde: "))
+x_ =[]
+iterasi = 0 
+for i in range(len(x)):
+    pangkat = 0 
+    for j in range(n+1):
+        hasil = x[i]**pangkat
+        pangkat += 1
+        x_.append(hasil)
+    vander.append(x_)
+    x_ = []
+print(vander)
+
+X = np.array(vander)
+Xt=np.transpose(X)
+M = np.dot(Xt,X)
+M1 = np.linalg.inv(M)
+Yt = np.transpose(y)
+beta = np.dot(np.dot(M1,Xt),Yt)
+print(beta)
+
+x1 = np.arange(min(x),max(x)+ 0.1,0.1)
+y1 = []
+hasil = 0
+for i in range (len(x1)):
+    pangkat = 0
+    for j in range (n+1):
+        hasil += beta[j]*x1[i]**pangkat
+        pangkat += 1
+    y1.append(hasil)
+    hasil = 0
+
+y2 = []
+jumlah=0
+for i in range (len(x)):
+    pangkat = 0 
+    for j in range(n+1):
+        jumlah += beta[j]*x[i]**pangkat
+        pangkat +=1
+    y2.append(jumlah)
+    jumlah = 0
+
+D2 = 0 
+Dt = 0 
+y_bar = 0
+
+for i in range(len(y)):
+    y_bar += y[i]
+y_bar = y_bar/len(y)
+for i in range(len(x)):
+    D2 += (y[i]-y2[i])**2
+    Dt += (y[i]-y_bar)**2
+R = ( (Dt-D2) / Dt )**0.5
+
+plt.scatter(x,y)
+plt.plot(x1,y1, label="R:%.4f" %R)
+plt.legend()
+plt.show()
