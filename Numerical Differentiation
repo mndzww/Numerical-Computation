@@ -1,0 +1,44 @@
+import numpy as np
+from sympy import *
+#metode selisih maju
+x = symbols('x')
+def f(x):
+    return x * sin(x) / (x)**2
+x_inp = 1.0
+h = 0.1
+f1o = (f(x+h).subs(x,x_inp)-f(x).subs(x,x_inp))/h
+z = diff(f(x),x)
+result = z.subs(x,x_inp).evalf()
+e = abs(result-f1o)
+print("Hasil Metode : {}".format(f1o))
+print("Hasil Eksak : {}".format(result))
+print("Besar galat : {}".format(e))
+
+
+#metode selisih pusat
+x = symbols('x')
+def f(x):
+    return x * sin(x) / (x)**2
+x_inp = 1.0
+h = 0.1
+f1o = (f(x+h).subs(x,x_inp)-f(x-h).subs(x,x_inp))/2*h
+z = diff(f(x),x)
+result = z.subs(x,x_inp).evalf()
+e = abs(result-f1o)
+print("Hasil Metode : {}".format(f1o))
+print("Hasil Eksak : {}".format(result))
+print("Besar galat : {}".format(e))
+
+#metode selisih mndur
+x = symbols('x')
+def f(x):
+    return x * sin(x) / (x)**2
+x_inp = 1.0
+h = 0.1
+f1o = (f(x).subs(x,x_inp)-f(x-h).subs(x,x_inp))/h
+z = diff(f(x),x)
+result = z.subs(x,x_inp).evalf()
+e = abs(result-f1o)
+print("Hasil Metode : {}".format(f1o))
+print("Hasil Eksak : {}".format(result))
+print("Besar galat : {}".format(e))
